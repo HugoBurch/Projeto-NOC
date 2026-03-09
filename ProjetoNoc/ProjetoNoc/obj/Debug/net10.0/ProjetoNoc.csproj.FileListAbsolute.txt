@@ -1,0 +1,14 @@
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\obj\Debug\net10.0\ProjetoNoc.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\obj\Debug\net10.0\ProjetoNoc.AssemblyInfoInputs.cache
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\obj\Debug\net10.0\ProjetoNoc.AssemblyInfo.cs
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\obj\Debug\net10.0\ProjetoNoc.csproj.CoreCompileInputs.cache
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\bin\Debug\net10.0\ProjetoNoc.exe
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\bin\Debug\net10.0\ProjetoNoc.deps.json
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\bin\Debug\net10.0\ProjetoNoc.runtimeconfig.json
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\bin\Debug\net10.0\ProjetoNoc.dll
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\bin\Debug\net10.0\ProjetoNoc.pdb
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\obj\Debug\net10.0\ProjetoNoc.dll
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\obj\Debug\net10.0\refint\ProjetoNoc.dll
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\obj\Debug\net10.0\ProjetoNoc.pdb
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\obj\Debug\net10.0\ProjetoNoc.genruntimeconfig.cache
+C:\Users\hugos\source\repos\ProjetoNoc\ProjetoNoc\obj\Debug\net10.0\ref\ProjetoNoc.dll

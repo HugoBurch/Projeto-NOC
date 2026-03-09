@@ -1,0 +1,28 @@
+C:\Users\hugos\source\repos\NOC\NOC\bin\Debug\net10.0\NOC.exe
+C:\Users\hugos\source\repos\NOC\NOC\bin\Debug\net10.0\NOC.deps.json
+C:\Users\hugos\source\repos\NOC\NOC\bin\Debug\net10.0\NOC.runtimeconfig.json
+C:\Users\hugos\source\repos\NOC\NOC\bin\Debug\net10.0\NOC.dll
+C:\Users\hugos\source\repos\NOC\NOC\bin\Debug\net10.0\NOC.pdb
+C:\Users\hugos\source\repos\NOC\NOC\obj\Debug\net10.0\NOC.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hugos\source\repos\NOC\NOC\obj\Debug\net10.0\NOC.AssemblyInfoInputs.cache
+C:\Users\hugos\source\repos\NOC\NOC\obj\Debug\net10.0\NOC.AssemblyInfo.cs
+C:\Users\hugos\source\repos\NOC\NOC\obj\Debug\net10.0\NOC.csproj.CoreCompileInputs.cache
+C:\Users\hugos\source\repos\NOC\NOC\obj\Debug\net10.0\NOC.dll
+C:\Users\hugos\source\repos\NOC\NOC\obj\Debug\net10.0\refint\NOC.dll
+C:\Users\hugos\source\repos\NOC\NOC\obj\Debug\net10.0\NOC.pdb
+C:\Users\hugos\source\repos\NOC\NOC\obj\Debug\net10.0\NOC.genruntimeconfig.cache
+C:\Users\hugos\source\repos\NOC\NOC\obj\Debug\net10.0\ref\NOC.dll
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\bin\Debug\net10.0\NOC.exe
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\bin\Debug\net10.0\NOC.deps.json
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\bin\Debug\net10.0\NOC.runtimeconfig.json
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\bin\Debug\net10.0\NOC.dll
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\bin\Debug\net10.0\NOC.pdb
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\obj\Debug\net10.0\NOC.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\obj\Debug\net10.0\NOC.AssemblyInfoInputs.cache
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\obj\Debug\net10.0\NOC.AssemblyInfo.cs
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\obj\Debug\net10.0\NOC.csproj.CoreCompileInputs.cache
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\obj\Debug\net10.0\NOC.dll
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\obj\Debug\net10.0\refint\NOC.dll
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\obj\Debug\net10.0\NOC.pdb
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\obj\Debug\net10.0\NOC.genruntimeconfig.cache
+C:\Users\hugos\Downloads\Projeto-NOC-master (1)\Projeto-NOC-master\NOC\obj\Debug\net10.0\ref\NOC.dll
