@@ -39,7 +39,7 @@ namespace NOC
         //criar RDO
         public void AdicionarChamados()
         {
-            string titulo;
+            
             string descricao;
             string prioridade;
             string nome;
@@ -50,9 +50,64 @@ namespace NOC
             DateTime dataCriacao = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, fusoSaoPaulo);
             DateTime? dataFinalizacao = null;
 
-            Console.WriteLine("Titulo da RDO");
-            titulo = Console.ReadLine();
+            Console.WriteLine("Tipo da RDO:");
+            Console.WriteLine("[1]Rompimento - [2]Backbone - [3]CTO - [4]CEO ");
+            Tipos tipo = Enum.Parse<Tipos>(Console.ReadLine());
             Console.Clear();
+            Console.Clear();
+            Console.WriteLine($"Selecione o Subtipo para {tipo}:");
+
+            // Variável declarada fora para resolver o erro de escopo que você teve
+            TipoComSubtipo tipoFinal = null;
+
+            
+
+            if (TipoSubtipoRelacao.Relacao.TryGetValue(tipo, out var subtiposPermitidos))
+            {
+                // Exibe apenas os subtipos que pertencem àquele Tipo
+                foreach (var st in subtiposPermitidos)
+                {
+                    Console.WriteLine($"[{(int)st}] {st}");
+                }
+                SubTipos subTipoSelecionado;
+                // Lê a opção e já valida se ela existe no HashSet
+                while (true)
+                {
+                    Console.Write("Digite o número do subtipo: ");
+
+                    string entrada = Console.ReadLine();
+
+                    // verifica se digitou um número
+                    if (!int.TryParse(entrada, out int numero))
+                    {
+                        Console.WriteLine("Digite apenas números.");
+                        continue;
+                    }
+
+                    // converte número para enum
+                    if (!Enum.IsDefined(typeof(SubTipos), numero))
+                    {
+                        Console.WriteLine("Subtipo não existe.");
+                        continue;
+                    }
+
+                    subTipoSelecionado = (SubTipos)numero;
+
+                    // verifica se pertence ao tipo escolhido
+                    if (!subtiposPermitidos.Contains(subTipoSelecionado))
+                    {
+                        Console.WriteLine("Esse subtipo não pertence ao tipo selecionado.");
+                        continue;
+                    }
+
+                    break;
+                }
+                tipoFinal = new TipoComSubtipo(tipo, subTipoSelecionado);
+
+                Console.WriteLine("Tipo e Subtipo selecionados com sucesso.");
+            }
+
+
             Console.WriteLine("Descrição da RDO");
             descricao = Console.ReadLine();
             Console.Clear();
@@ -65,13 +120,14 @@ namespace NOC
             idTec = int.Parse(Console.ReadLine());
             var tec = chamados.BuscarTecnico(idTec);
             Console.WriteLine("ID digitado: " + idTec);
-            if (tec != null)
+            if (tec != null && tipoFinal != null)
             {
                 int opcao;
                 Console.WriteLine($"nome: {tec.getNome()}");
                 Console.WriteLine("Confirma Técnico");
                 Console.WriteLine("[1] Sim");
                 Console.WriteLine("[2] Não");
+                Console.Write(":");
 
                 opcao = int.Parse(Console.ReadLine());
                 Console.Clear();
@@ -79,11 +135,13 @@ namespace NOC
                 {
                     Console.WriteLine("Técnico confirmado");
                     int id = chamados.ObterProximoId(); // pegar ID
-                    RDOs chamado = new RDOs(id, titulo, descricao, prioridade, dataCriacao,dataFinalizacao, tec, StatusE.Andamento);
+                    RDOs chamado = new RDOs(id, tipoFinal, descricao, prioridade, dataCriacao,dataFinalizacao, tec, StatusE.Andamento);
                     try
                     {
                         chamados.AdicionarChamado(chamado);
-                        Console.WriteLine("RDO cadastrada");
+                        Console.WriteLine($" ------- RDO {id.ToString("D3")} CADASTRADA ------- ");
+                        Thread.Sleep(2000);
+                        Console.Clear();
                     }
                     catch (ArgumentException e)
                     {
@@ -129,27 +187,54 @@ namespace NOC
         }
         public void ConsultarChamadosAbertos()
         {
-            var lista = chamados.ObterChamados();
-            Console.WriteLine("LISTA DE RDO");
-            if (lista.Count == 0 || lista.Any(c => c.getStatus() == StatusE.Fechado)) // usando linq para consultar 
-            {
-                Console.WriteLine("Não há RDO em Andamento");
-            }
-            else
-            {
-                foreach (RDOs chamado in lista.Where(c => c.getStatus() == StatusE.Andamento))
+            int pagina = 0;
+            int itensPorPagina = 3;
+            while (true) {
+                Console.Clear();
+                var listaFiltrada = chamados.ObterChamados().Skip(pagina * itensPorPagina).Take(itensPorPagina);
+                var lista = chamados.ObterChamados();
+                Console.WriteLine("LISTA DE RDO");
+                if (lista.Count == 0 || lista.Any(c => c.getStatus() == StatusE.Fechado)) // usando linq para consultar 
                 {
-
-                    Console.WriteLine("---------------------------");
-                    Console.WriteLine($"RDO: {chamado.getId().ToString("D3")}");
-                    Console.WriteLine($"Título: {chamado.getTitulo()}");
-                    Console.WriteLine($"Descrição: {chamado.getDescricao()}");
-                    Console.WriteLine($"Prioridade: {chamado.getPrioridade()}");
-                    Console.WriteLine($"Data de Criação: {chamado.getDataCriacao()}");
-                    Console.WriteLine($"Técnico Responsável: {chamado.getTecnico().getNome()} (ID: {chamado.getTecnico().getIdTecnico()})");
-                    Console.WriteLine($"Status: {chamado.getStatus()}");
-                    Console.WriteLine("---------------------------");
+                    Console.WriteLine("Não há RDO em Andamento");
+                    return;
                 }
+                else
+                {
+                    foreach (RDOs chamado in listaFiltrada.Where(c => c.getStatus() == StatusE.Andamento))
+                    {
+
+                        Console.WriteLine("-------------------------------------------------");
+                        Console.WriteLine($"RDO: {chamado.getId().ToString("D3")}");
+                        Console.WriteLine($"Tipo: {chamado.tipo}");
+                        Console.WriteLine($"Descrição: {chamado.getDescricao()}");
+                        Console.WriteLine($"Prioridade: {chamado.getPrioridade()}");
+                        Console.WriteLine($"Data de Criação: {chamado.getDataCriacao()}");
+                        Console.WriteLine($"Técnico Responsável: {chamado.getTecnico().getNome()} (ID: {chamado.getTecnico().getIdTecnico()})");
+                        Console.WriteLine($"Status: {chamado.getStatus()}");
+                        Console.WriteLine("-------------------------------------------------");
+
+                        Console.WriteLine($"\n TOTAL DE RDO {lista.Count()} | [N] Próxima página | [P] Página anterior | [S] Sair");
+
+                        var tecla = Console.ReadKey(true).Key;
+
+                        if (tecla == ConsoleKey.S)
+                        {
+                            return; // O 'return' encerra o MÉTODO inteiro, garantindo que ele saia.
+                        }
+                        else if (tecla == ConsoleKey.N)
+                        {
+                            if ((pagina + 1) * itensPorPagina < lista.Count())
+                                pagina++;
+                        }
+                        else if (tecla == ConsoleKey.P)
+                        {
+                            if (pagina > 0)
+                                pagina--;
+                        }
+                    }
+                }
+
             }
         }
         public void ConsultarChamadosFechados()
@@ -163,7 +248,7 @@ namespace NOC
 
                     Console.WriteLine("---------------------------");
                     Console.WriteLine($"RDO: {chamado.getId().ToString("D3")}");
-                    Console.WriteLine($"Título: {chamado.getTitulo()}");
+                    Console.WriteLine($"Título: {chamado.getTipo().ToString()}");
                     Console.WriteLine($"Descrição: {chamado.getDescricao()}");
                     Console.WriteLine($"Prioridade: {chamado.getPrioridade()}");
                     Console.WriteLine($"Data de Criação: {chamado.getDataCriacao()}");
@@ -185,7 +270,7 @@ namespace NOC
             {
                 Console.WriteLine("---------------------------");
                 Console.WriteLine($"RDO: {chamado.getId().ToString("D3")}");
-                Console.WriteLine($"Título: {chamado.getTitulo()}");
+                Console.WriteLine($"Título: {chamado.getTipo().ToString()}");
                 Console.WriteLine($"Descrição: {chamado.getDescricao()}");
                 Console.WriteLine($"Prioridade: {chamado.getPrioridade()}");
                 Console.WriteLine($"Data de Criação: {chamado.getDataCriacao()}");
@@ -206,7 +291,7 @@ namespace NOC
                 if (chamados.ExiteRDO(id) && modificar.getId() == id)
                 {
                     int opcao;
-                    Console.WriteLine($"Titulo: {modificar.getTitulo()}");
+                    Console.WriteLine($"Titulo: {modificar.getTipo().ToString()}");
                     Console.WriteLine($"Dia:  {modificar.getDataCriacao()}");
                     Console.WriteLine("Confirma RDO");
                     Console.WriteLine("[1] Sim ");
@@ -217,7 +302,6 @@ namespace NOC
                         Console.WriteLine("RDO Confirmada");
                         Console.WriteLine("---------------------------");
                         Console.WriteLine("selecione a opção desejada:");
-                        Console.WriteLine("[1] Titulo");
                         Console.WriteLine("[2] Descrição");
                         Console.WriteLine("[3] Técnico");
                         Console.WriteLine("[4] Prioridade");
@@ -225,24 +309,35 @@ namespace NOC
                         switch (opcao)
                         {
                             case 1:
-                                modificar.setTitulo(Console.ReadLine());
+                                
                                 Console.WriteLine("Titulo Modificado");
+                                Executar();
+                                Console.Clear();
                                 break;
                             case 2:
+                                Console.WriteLine("Descrição nova:");
                                 modificar.setDescricao(Console.ReadLine());
                                 Console.WriteLine("Descrição Modificada");
+                                Executar();
+                                Console.Clear();
                                 break;
                             case 3:
+                                Console.WriteLine("Digite o ID do técnico:");
                                 modificar.getTecnico().setId(int.Parse(Console.ReadLine()));
                                 modificar.getTecnico().setNome(Console.ReadLine());
+                                Executar();
+                                Console.Clear();
                                 break;
                             case 4:
                                 modificar.setPrioridade(Console.ReadLine());
                                 Console.WriteLine("Prioridade Modificada");
+                                Executar();
+                                Console.Clear();
                                 break;
 
                             default:
                                 Console.WriteLine("Opção inválida");
+                                Executar();
                                 break;
                         }
                     }
@@ -271,9 +366,9 @@ namespace NOC
             id = int.Parse(Console.ReadLine());
             foreach (RDOs finalizar in chamados.ObterChamados())
             {
-                if (chamados.ExiteRDO(id))
+                if (chamados.ExiteRDO(id) && finalizar.getStatus().Equals(StatusE.Andamento))
                 {
-                    Console.WriteLine($"Titulo {finalizar.getTitulo()}");
+                    Console.WriteLine($"Titulo {finalizar.getTipo().ToString()}");
                     Console.WriteLine($"Descrição {finalizar.getDescricao()}");
                     Console.WriteLine("Confirma RDO");
                     Console.WriteLine("[1] Sim ");
@@ -295,15 +390,25 @@ namespace NOC
         }
         private void Menu()
         {
-            Console.WriteLine("[1] Cadastrar RDO ");
-            Console.WriteLine("[2] Consultar RDO Aberta ");
-            Console.WriteLine("[3] Consultar RDO Fechada ");
-            Console.WriteLine("[4] Consultar RDOs ");
-            Console.WriteLine("[5] Cadastrar Técnico ");            
-            Console.WriteLine("[6] Consultar Técnico ");
-            Console.WriteLine("[7] Modificar RDO ");
-            Console.WriteLine("[8] Finalizar RDO ");
-            Console.WriteLine("[9] Sair Do Programa ");
+
+            Console.WriteLine("╔══════════════════════════════════════╗");
+            Console.WriteLine("║            MENU PRINCIPAL            ║");
+            Console.WriteLine("╠══════════════════════════════════════╣");
+            Console.WriteLine("║ 1  - Cadastrar RDO                   ║");
+            Console.WriteLine("║ 2  - Consultar RDO Aberta            ║");
+            Console.WriteLine("║ 3  - Consultar RDO Fechada           ║");
+            Console.WriteLine("║ 4  - Consultar RDOs                  ║");
+            Console.WriteLine("╠══════════════════════════════════════╣");
+            Console.WriteLine("║ 5  - Cadastrar Técnico               ║");
+            Console.WriteLine("║ 6  - Consultar Técnico               ║");
+            Console.WriteLine("╠══════════════════════════════════════╣");
+            Console.WriteLine("║ 7  - Modificar RDO                   ║");
+            Console.WriteLine("║ 8  - Finalizar RDO                   ║");
+            Console.WriteLine("╠══════════════════════════════════════╣");
+            Console.WriteLine("║ 9  - Sair                            ║");
+            Console.WriteLine("╚══════════════════════════════════════╝");
+
+            Console.Write("\nDigite a opção desejada: ");
         }
         private void ExecutarMenu(int opcao)
         {

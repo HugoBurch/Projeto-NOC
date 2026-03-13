@@ -10,18 +10,18 @@ namespace NOC
 {
     public class RDOs
     {
-        private int id;
-        private string titulo;
+        private readonly int id;
+        public TipoComSubtipo tipo { get; set; }
         private string descricao;
         private string prioridade;
         public StatusE Status { get; set; }
         private DateTime dataCriacao;
         private DateTime? dataFinalizacao;
         private Tecnico tecnico;
-        public RDOs(int id, string titulo, string descricao, string prioridade, DateTime dataCriacao,DateTime? dataFinalizacao, Tecnico tecnico, StatusE Status)
+        public RDOs(int id, TipoComSubtipo tipo, string descricao, string prioridade, DateTime dataCriacao,DateTime? dataFinalizacao, Tecnico tecnico, StatusE Status)
         {
             this.id = id;
-            this.titulo = titulo;
+            this.tipo = tipo;
             this.descricao = descricao;
             this.prioridade = prioridade;
             this.dataCriacao = dataCriacao;
@@ -33,9 +33,9 @@ namespace NOC
         {
             return id;
         }
-        public string getTitulo()
+        public TipoComSubtipo getTipo()
         {
-            return titulo;
+            return tipo;
         }
         public string getDescricao()
         {
@@ -77,10 +77,6 @@ namespace NOC
         public void setDescricao(string descricao)
         {
             this.descricao = descricao;
-        }
-        public void setTitulo(string titulo)
-        {
-            this.titulo = titulo;
         }
         public void setTecnico(Tecnico tecnico)
         {
